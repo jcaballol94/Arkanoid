@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class BallTest : MonoBehaviour
 {
-    [SerializeField] private float _speed = 3f;
+    [SerializeField] private float m_speed = 5f;
+
+    private Rigidbody2D m_rigidbody;
 
     // Start is called before the first frame update
     void Start()
     {
-        var rigidbody = GetComponent<Rigidbody2D>();
-        rigidbody.velocity = Random.insideUnitCircle * _speed;
+        m_rigidbody = GetComponent<Rigidbody2D>();
+        m_rigidbody.velocity = Random.insideUnitCircle * m_speed;
+    }
+
+    private void FixedUpdate()
+    {
+        // Keep the speed constant
+        m_rigidbody.velocity = m_rigidbody.velocity.normalized * m_speed;
     }
 }
