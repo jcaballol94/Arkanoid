@@ -5,6 +5,7 @@ using UnityEngine;
 public class BallTest : MonoBehaviour
 {
     [SerializeField] private float m_speed = 5f;
+    [SerializeField][Range(0f, 1f)] private float m_stickiness = 0.5f;
 
     private Rigidbody2D m_rigidbody;
 
@@ -31,6 +32,6 @@ public class BallTest : MonoBehaviour
 
         // Combine the speed of the other object
         var otherSpeed = collision.rigidbody.velocity;
-        m_rigidbody.velocity += otherSpeed;
+        m_rigidbody.velocity += otherSpeed * m_stickiness;
     }
 }
