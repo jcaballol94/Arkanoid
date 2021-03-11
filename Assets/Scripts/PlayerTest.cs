@@ -8,6 +8,7 @@ public class PlayerTest : MonoBehaviour
 
     private Rigidbody2D m_rigidbody;
     private float m_target;
+    private bool m_move = false;
 
     private void Start()
     {
@@ -27,14 +28,22 @@ public class PlayerTest : MonoBehaviour
             {
                 var clickedPos = ray.GetPoint(dist);
                 m_target = clickedPos.x;
+                m_move = true;
+                return;
             }
         }
+        m_move = false;
     }
 
     private void FixedUpdate()
     {
-        var dist = m_target - transform.position.x;
-        var velocity = Mathf.Clamp(dist / Time.deltaTime , - m_speed, m_speed);
+        var velocity = 0f;
+
+        if (m_move)
+        {
+            var dist = m_target - transform.position.x;
+            velocity = Mathf.Clamp(dist / Time.deltaTime, -m_speed, m_speed);
+        }
 
         m_rigidbody.velocity = Vector2.right * velocity;
     }
