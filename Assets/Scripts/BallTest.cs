@@ -18,6 +18,19 @@ public class BallTest : MonoBehaviour
     private void FixedUpdate()
     {
         // Keep the speed constant
-        m_rigidbody.velocity = m_rigidbody.velocity.normalized * m_speed;
+        var velocity = m_rigidbody.velocity.normalized * m_speed;
+        // Make sure that the ball always moves vertically
+        if (Mathf.Approximately(0f, velocity.y)) velocity.y = -0.1f;
+
+        m_rigidbody.velocity = velocity;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!collision.rigidbody) return;
+
+        // Combine the speed of the other object
+        var otherSpeed = collision.rigidbody.velocity;
+        m_rigidbody.velocity += otherSpeed;
     }
 }
