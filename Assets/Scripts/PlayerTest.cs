@@ -6,15 +6,18 @@ public class PlayerTest : MonoBehaviour
 {
     [SerializeField] private float m_speed = 10f;
     [SerializeField] [Range(0f, 1f)] private float m_stickiness = 0.5f;
+    [SerializeField] [Range(0.001f, 1f)] private float m_stickinessInertia = 0.5f;
 
     private Rigidbody2D m_rigidbody;
     private float m_target;
     private bool m_move = false;
+    private Vector2 m_averageVelocity;
 
     private void Start()
     {
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_target = transform.position.x;
+        m_averageVelocity = Vector3.zero;
     }
 
     private void Update()
@@ -47,6 +50,7 @@ public class PlayerTest : MonoBehaviour
         }
 
         m_rigidbody.velocity = Vector2.right * velocity;
+        m_averageVelocity = Vector2.Lerp(m_averageVelocity, m_rigidbody.velocity, Time.deltaTime / m_stickinessInertia);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -54,7 +58,6 @@ public class PlayerTest : MonoBehaviour
         if (!collision.rigidbody) return;
 
         // Combine the speed of the other object
-        var mySpeed = m_rigidbody.velocity;
-        collision.rigidbody.velocity += mySpeed * m_stickiness;
+        collision.rigidbody.velocity += m_averageVelocity * m_stickiness;
     }
 }
