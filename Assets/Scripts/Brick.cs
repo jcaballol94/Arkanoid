@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Brick : MonoBehaviour
+namespace Caballol.Arkanoid
 {
-    [SerializeField] private int m_life = 1;
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    public class Brick : MonoBehaviour
     {
-        if (--m_life == 0)
+        [SerializeField] private int m_life = 1;
+
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            Destroy(this.gameObject);
+            if (--m_life == 0)
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }
