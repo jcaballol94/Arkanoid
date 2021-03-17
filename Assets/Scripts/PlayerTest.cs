@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerTest : MonoBehaviour
 {
     [SerializeField] private float m_speed = 10f;
+    [SerializeField] [Range(0f, 1f)] private float m_stickiness = 0.5f;
 
     private Rigidbody2D m_rigidbody;
     private float m_target;
@@ -46,5 +47,14 @@ public class PlayerTest : MonoBehaviour
         }
 
         m_rigidbody.velocity = Vector2.right * velocity;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!collision.rigidbody) return;
+
+        // Combine the speed of the other object
+        var mySpeed = m_rigidbody.velocity;
+        collision.rigidbody.velocity += mySpeed * m_stickiness;
     }
 }
