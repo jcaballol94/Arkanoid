@@ -13,11 +13,11 @@ namespace Caballol.Arkanoid
         private Rigidbody2D m_rigidbody;
         private bool m_kickedOff;
 
-        public void KickOff()
+        public void KickOff(Vector3 direction)
         {
             m_kickedOff = true;
             m_rigidbody.isKinematic = false;
-            m_rigidbody.velocity = Random.insideUnitCircle * m_speed;
+            m_rigidbody.velocity = direction * m_speed;
         }
 
         // Start is called before the first frame update
