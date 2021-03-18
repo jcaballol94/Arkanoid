@@ -26,8 +26,23 @@ namespace Caballol.Arkanoid
             m_kickoffPanel.gameObject.SetActive(true);
         }
 
+        private void OnDisable()
+        {
+            StopAllCoroutines();
+        }
+
         private void OnBallKilled()
         {
+            StartCoroutine(RecenterRoutine());
+        }
+
+        private IEnumerator RecenterRoutine()
+        {
+            // Recenter the player
+            m_player.Recenter();
+
+            yield return new WaitUntil(() => m_player.IsCentered);
+
             // Respawn the ball and open the kick off panel
             m_ball.transform.position = m_initialBallPosition;
             m_ball.gameObject.SetActive(true);
@@ -39,6 +54,9 @@ namespace Caballol.Arkanoid
             // Close the kickoffpanel and kick off the ball
             m_kickoffPanel.gameObject.SetActive(false);
             m_ball.KickOff(direction);
+
+            // Return control to the player
+            m_player.Release();
         }
     }
 }

@@ -14,16 +14,23 @@ namespace Caballol.Arkanoid
         private float m_target;
         private bool m_move = false;
         private Vector2 m_averageVelocity;
+        private bool m_active;
+
+        public bool IsCentered => Mathf.Approximately(0f, transform.position.x);
 
         private void Start()
         {
             m_rigidbody = GetComponent<Rigidbody2D>();
             m_target = transform.position.x;
             m_averageVelocity = Vector3.zero;
+
+            m_active = false;
         }
 
         private void Update()
         {
+            if (!m_active) return;
+
             if (Input.GetMouseButton(0))
             {
                 var camera = Camera.main;
@@ -61,6 +68,22 @@ namespace Caballol.Arkanoid
 
             // Combine the speed of the other object
             collision.rigidbody.velocity += m_averageVelocity * m_stickiness;
+        }
+
+        public void Recenter()
+        {
+            // Remove control from the player
+            m_active = false;
+
+            // Move to the center
+            m_target = 0f;
+            m_move = true;
+        }
+
+        public void Release()
+        {
+            // Return control to the player
+            m_active = true;
         }
     }
 }
