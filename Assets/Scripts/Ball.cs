@@ -6,8 +6,9 @@ namespace Caballol.Arkanoid
 {
     public class Ball : MonoBehaviour
     {
-        [SerializeField] private float m_speed = 5f;
+        public event System.Action onKilled;
 
+        [SerializeField] private float m_speed = 5f;
 
         private Rigidbody2D m_rigidbody;
 
@@ -33,6 +34,7 @@ namespace Caballol.Arkanoid
             if (coll.gameObject.CompareTag("Kill"))
             {
                 gameObject.SetActive(false);
+                onKilled?.Invoke();
             }
         }
     }
