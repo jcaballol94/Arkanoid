@@ -11,16 +11,31 @@ namespace Caballol.Arkanoid
         [SerializeField] private float m_speed = 5f;
 
         private Rigidbody2D m_rigidbody;
+        private bool m_kickedOff;
+
+        public void KickOff()
+        {
+            m_kickedOff = true;
+            m_rigidbody.isKinematic = false;
+            m_rigidbody.velocity = Random.insideUnitCircle * m_speed;
+        }
 
         // Start is called before the first frame update
-        void Start()
+        private void Awake()
         {
             m_rigidbody = GetComponent<Rigidbody2D>();
-            m_rigidbody.velocity = Random.insideUnitCircle * m_speed;
+        }
+
+        private void OnEnable()
+        {
+            m_rigidbody.isKinematic = true;
+            m_kickedOff = false;
         }
 
         private void FixedUpdate()
         {
+            if (!m_kickedOff) return;
+
             // Keep the speed constant
             var velocity = m_rigidbody.velocity.normalized * m_speed;
             // Make sure that the ball always moves vertically
