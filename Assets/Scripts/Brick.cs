@@ -12,7 +12,7 @@ namespace Caballol.Arkanoid
         {
             if (--m_life == 0)
             {
-                Destroy(this.gameObject);
+                gameObject.SetActive(false);
             }
         }
     }
