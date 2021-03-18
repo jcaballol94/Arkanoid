@@ -27,5 +27,13 @@ namespace Caballol.Arkanoid
 
             m_rigidbody.velocity = velocity;
         }
+
+        private void OnCollisionEnter2D(Collision2D coll)
+        {
+            if (coll.gameObject.CompareTag("Kill"))
+            {
+                gameObject.SetActive(false);
+            }
+        }
     }
 }
