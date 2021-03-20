@@ -11,12 +11,19 @@ namespace Caballol.Arkanoid
         [SerializeField] private PlayerController m_player;
         [SerializeField] private BrickManager m_bricks;
 
+        [Header("Settings")]
+        [SerializeField] private int m_lives = 3;
+
         [Header("UI")]
         [SerializeField] private UI.KickOffPanel m_kickoffPanel;
         [SerializeField] private GameObject m_winPanel;
+        [SerializeField] private GameObject m_losePanel;
+
+        public int Lives => m_remainingLives;
 
         private Vector3 m_initialBallPosition;
         private bool m_canContinue;
+        private int m_remainingLives;
 
         private void Start()
         {
@@ -42,8 +49,17 @@ namespace Caballol.Arkanoid
 
         private void OnBallKilled()
         {
-            // Kick off again
-            StartCoroutine(KickOffRoutine());
+            // Lose a life
+            if (--m_remainingLives == 0)
+            {
+                // Lose
+                StartCoroutine(LoseRoutine());
+            }
+            else
+            {
+                // Kickoff again
+                StartCoroutine(KickOffRoutine());
+            }
         }
 
         private void OnLevelCleared()
@@ -67,8 +83,11 @@ namespace Caballol.Arkanoid
 
         private IEnumerator StartGameRoutine()
         {
+            m_remainingLives = m_lives;
+
             // Hide the panels
             m_winPanel.SetActive(false);
+            m_losePanel.SetActive(false);
 
             // Load the bricks in the level
             m_bricks.StartLevel();
@@ -85,6 +104,26 @@ namespace Caballol.Arkanoid
 
             // Show the win panel
             m_winPanel.SetActive(true);
+
+            // Give time to avoid skiping inadvertently
+            yield return new WaitForSecondsRealtime(0.5f);
+
+            // Wait for the user to close the panel
+            m_canContinue = false;
+            yield return new WaitUntil(() => m_canContinue);
+
+            // Start the game
+            yield return StartGameRoutine();
+        }
+
+        private IEnumerator LoseRoutine()
+        {
+            // Stop playing
+            m_ball.Despawn();
+            m_player.Stop();
+
+            // Show the lose panel
+            m_losePanel.SetActive(true);
 
             // Give time to avoid skiping inadvertently
             yield return new WaitForSecondsRealtime(0.5f);

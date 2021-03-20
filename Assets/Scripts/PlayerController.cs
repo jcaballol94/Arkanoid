@@ -11,8 +11,13 @@ namespace Caballol.Arkanoid
         [SerializeField] [Range(0.001f, 1f)] private float m_stickinessInertia = 0.5f;
 
         private Rigidbody2D m_rigidbody;
-        private float m_target;
+        private Camera m_camera;
+
         private bool m_move = false;
+        private float m_target;
+        private float m_touchPoint;
+        private float m_initialPosition;
+
         private Vector2 m_averageVelocity;
         private bool m_active;
 
@@ -21,6 +26,8 @@ namespace Caballol.Arkanoid
         private void Start()
         {
             m_rigidbody = GetComponent<Rigidbody2D>();
+            m_camera = Camera.main;
+
             m_target = transform.position.x;
             m_averageVelocity = Vector3.zero;
 
@@ -31,21 +38,31 @@ namespace Caballol.Arkanoid
         {
             if (!m_active) return;
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0))
             {
-                var camera = Camera.main;
-                var ray = camera.ScreenPointToRay(Input.mousePosition);
-                var gamePlane = new Plane(Vector3.back, Vector3.zero);
+                // Store the initial position
+                m_initialPosition = transform.position.x;
 
-                if (gamePlane.Raycast(ray, out var dist))
+                if (GetMousePosition(out m_touchPoint))
                 {
-                    var clickedPos = ray.GetPoint(dist);
-                    m_target = clickedPos.x;
                     m_move = true;
-                    return;
+                }
+                else
+                {
+                    m_move = false;
                 }
             }
-            m_move = false;
+            else if (m_move && Input.GetMouseButton(0))
+            {
+                if (GetMousePosition(out var newTouch))
+                {
+                    m_target = m_initialPosition + newTouch - m_touchPoint;
+                }
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                m_move = false;
+            }
         }
 
         private void FixedUpdate()
@@ -90,6 +107,22 @@ namespace Caballol.Arkanoid
         {
             // Return control to the player
             m_active = true;
+        }
+
+        private bool GetMousePosition (out float position)
+        {
+            var ray = m_camera.ScreenPointToRay(Input.mousePosition);
+            var gamePlane = new Plane(Vector3.back, Vector3.zero);
+
+            if (gamePlane.Raycast(ray, out var dist))
+            {
+                var clickedPos = ray.GetPoint(dist);
+                position = clickedPos.x;
+                return true;
+            }
+
+            position = 0f;
+            return false;
         }
     }
 }
