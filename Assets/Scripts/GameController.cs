@@ -13,8 +13,10 @@ namespace Caballol.Arkanoid
 
         [Header("UI")]
         [SerializeField] private UI.KickOffPanel m_kickoffPanel;
+        [SerializeField] private GameObject m_winPanel;
 
         private Vector3 m_initialBallPosition;
+        private bool m_canContinue;
 
         private void Start()
         {
@@ -46,9 +48,8 @@ namespace Caballol.Arkanoid
 
         private void OnLevelCleared()
         {
-            m_ball.Despawn();
             // Start a new game
-            StartCoroutine(StartGameRoutine());
+            StartCoroutine(WinRoutine());
         }
 
         private IEnumerator KickOffRoutine()
@@ -66,11 +67,34 @@ namespace Caballol.Arkanoid
 
         private IEnumerator StartGameRoutine()
         {
+            // Hide the panels
+            m_winPanel.SetActive(false);
+
             // Load the bricks in the level
             m_bricks.StartLevel();
 
             // Proceed to kickoff
             yield return KickOffRoutine();
+        }
+
+        private IEnumerator WinRoutine()
+        {
+            // Stop playing
+            m_ball.Despawn();
+            m_player.Stop();
+
+            // Show the win panel
+            m_winPanel.SetActive(true);
+
+            // Give time to avoid skiping inadvertently
+            yield return new WaitForSecondsRealtime(0.5f);
+
+            // Wait for the user to close the panel
+            m_canContinue = false;
+            yield return new WaitUntil(() => m_canContinue);
+
+            // Start the game
+            yield return StartGameRoutine();
         }
 
         private void KickOffPressed(Vector3 direction)
@@ -81,6 +105,11 @@ namespace Caballol.Arkanoid
 
             // Return control to the player
             m_player.Release();
+        }
+
+        public void Continue()
+        {
+            m_canContinue = true;
         }
     }
 }

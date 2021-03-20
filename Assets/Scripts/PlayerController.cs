@@ -73,11 +73,17 @@ namespace Caballol.Arkanoid
         public void Recenter()
         {
             // Remove control from the player
-            m_active = false;
+            Stop();
 
             // Move to the center
             m_target = 0f;
             m_move = true;
+        }
+
+        public void Stop()
+        {
+            m_active = false;
+            m_move = false;
         }
 
         public void Release()
