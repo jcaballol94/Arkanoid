@@ -154,11 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ball: {fileID: 121807347}
   m_player: {fileID: 1215952042}
-  m_bricks:
-  - {fileID: 4449465600257877292}
-  - {fileID: 436779008}
-  - {fileID: 2089421343}
-  - {fileID: 60050187}
+  m_bricks: {fileID: 1858800936}
   m_kickoffPanel: {fileID: 1682320559}
 --- !u!4 &32805807
 Transform:
@@ -1821,6 +1817,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1858800935}
+  - component: {fileID: 1858800936}
   m_Layer: 0
   m_Name: Bricks
   m_TagString: Untagged
@@ -1846,6 +1843,23 @@ Transform:
   m_Father: {fileID: 32805807}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1858800936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858800934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8303708fba2b964e93f122ae189b697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bricks:
+  - {fileID: 4449465600257877292}
+  - {fileID: 436779008}
+  - {fileID: 2089421343}
+  - {fileID: 60050187}
 --- !u!1 &1971376831
 GameObject:
   m_ObjectHideFlags: 0

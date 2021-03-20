@@ -26,10 +26,17 @@ namespace Caballol.Arkanoid
             m_rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        private void OnEnable()
+        public void Spawn()
         {
+            m_rigidbody.velocity = Vector3.zero;
             m_rigidbody.isKinematic = true;
             m_kickedOff = false;
+            gameObject.SetActive(true);
+        }
+
+        public void Despawn()
+        {
+            gameObject.SetActive(false);
         }
 
         private void FixedUpdate()
@@ -48,7 +55,7 @@ namespace Caballol.Arkanoid
         {
             if (coll.gameObject.CompareTag("Kill"))
             {
-                gameObject.SetActive(false);
+                Despawn();
                 onKilled?.Invoke();
             }
         }

@@ -9,7 +9,7 @@ namespace Caballol.Arkanoid
         [Header("Objects")]
         [SerializeField] private Ball m_ball;
         [SerializeField] private PlayerController m_player;
-        [SerializeField] private Brick[] m_bricks;
+        [SerializeField] private BrickManager m_bricks;
 
         [Header("UI")]
         [SerializeField] private UI.KickOffPanel m_kickoffPanel;
@@ -18,12 +18,19 @@ namespace Caballol.Arkanoid
 
         private void Start()
         {
+            // Prepare the bricks
+            m_bricks.onLevelCleared += OnLevelCleared;
+
+            // Prepare the ball
             m_initialBallPosition = m_ball.transform.position;
             m_ball.onKilled += OnBallKilled;
 
+            // Prepare the kickof panel
             m_kickoffPanel.SetBallPosition(m_initialBallPosition);
             m_kickoffPanel.onKickoffPressed += KickOffPressed;
-            m_kickoffPanel.gameObject.SetActive(true);
+
+            // First kickoff
+            StartCoroutine(StartGameRoutine());
         }
 
         private void OnDisable()
@@ -33,10 +40,18 @@ namespace Caballol.Arkanoid
 
         private void OnBallKilled()
         {
-            StartCoroutine(RecenterRoutine());
+            // Kick off again
+            StartCoroutine(KickOffRoutine());
         }
 
-        private IEnumerator RecenterRoutine()
+        private void OnLevelCleared()
+        {
+            m_ball.Despawn();
+            // Start a new game
+            StartCoroutine(StartGameRoutine());
+        }
+
+        private IEnumerator KickOffRoutine()
         {
             // Recenter the player
             m_player.Recenter();
@@ -45,8 +60,17 @@ namespace Caballol.Arkanoid
 
             // Respawn the ball and open the kick off panel
             m_ball.transform.position = m_initialBallPosition;
-            m_ball.gameObject.SetActive(true);
+            m_ball.Spawn();
             m_kickoffPanel.gameObject.SetActive(true);
+        }
+
+        private IEnumerator StartGameRoutine()
+        {
+            // Load the bricks in the level
+            m_bricks.StartLevel();
+
+            // Proceed to kickoff
+            yield return KickOffRoutine();
         }
 
         private void KickOffPressed(Vector3 direction)
