@@ -46,7 +46,7 @@ namespace Caballol.Arkanoid
             // Keep the speed constant
             var velocity = m_rigidbody.velocity.normalized * m_speed;
             // Make sure that the ball always moves vertically
-            if (Mathf.Approximately(0f, velocity.y)) velocity.y = -0.1f;
+            if (Mathf.Abs(velocity.y) < 0.1f) velocity.y = -0.1f;
 
             m_rigidbody.velocity = velocity;
         }
