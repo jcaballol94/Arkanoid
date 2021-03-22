@@ -28,7 +28,7 @@ namespace Caballol.Arkanoid
             }
             else if (coll.gameObject.CompareTag("Player"))
             {
-                onPicked(PowerUp);
+                onPicked?.(PowerUp);
                 Destroy(gameObject);
             }
         }
