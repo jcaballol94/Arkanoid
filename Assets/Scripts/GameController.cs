@@ -174,6 +174,10 @@ namespace Caballol.Arkanoid
             {
                 m_player.ApplyPowerUp(powerUp);
             }
+            else if (typeFlags.HasFlag(PowerUp.PowerUpFlags.BALL))
+            {
+                m_ball.ApplyPowerUp(powerUp);
+            }
         }
     }
 }

@@ -213,6 +213,8 @@ MonoBehaviour:
   m_possiblePowerUps:
   - {fileID: 11400000, guid: d5ce5517bc5d6204bb44ba641a60f8a0, type: 2}
   - {fileID: 11400000, guid: 2e834a881fcee28408c8fa0cfd99e94b, type: 2}
+  - {fileID: 11400000, guid: 1ab5b2ec7e10fb049b1ca635788051a8, type: 2}
+  - {fileID: 11400000, guid: 0d7933c8517494d4c9aa1cd8161507e9, type: 2}
 --- !u!4 &46484882
 Transform:
   m_ObjectHideFlags: 0
