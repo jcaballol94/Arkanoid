@@ -154,8 +154,15 @@ namespace Caballol.Arkanoid
             }
         }
 
+        public void CancelPowerUps()
+        {
+            SetLengthBonus(1f);
+            m_powerUpActive = false;
+        }
+
         private void SetLengthBonus(float bonus)
         {
+         
             var scale = transform.localScale;
             scale.x = m_baseSize * bonus;
             transform.localScale = scale;

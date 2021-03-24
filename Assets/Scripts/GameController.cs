@@ -112,6 +112,7 @@ namespace Caballol.Arkanoid
             m_powerUps.Clear();
             m_ball.Despawn();
             m_player.Stop();
+            m_player.CancelPowerUps();
         }
 
         private IEnumerator WinRoutine()
