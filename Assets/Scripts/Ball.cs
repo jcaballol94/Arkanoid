@@ -17,6 +17,9 @@ namespace Caballol.Arkanoid
         private float m_powerUpTimer;
         private float m_powerUpAmount;
 
+        private Vector2 m_lastVelocity;
+        private float m_superBallTimer;
+
         public void KickOff(Vector3 direction)
         {
             m_kickedOff = true;
@@ -58,6 +61,7 @@ namespace Caballol.Arkanoid
             // Make sure that the ball always moves vertically
             if (Mathf.Abs(velocity.y) < 0.1f) velocity.y = -0.1f;
 
+            m_lastVelocity = velocity;
             m_rigidbody.velocity = velocity;
         }
 
@@ -70,12 +74,25 @@ namespace Caballol.Arkanoid
             }
         }
 
-        public void ApplyPowerUp (PowerUp powerUp)
+        public void BrickDestroyed()
         {
-            if (powerUp.Type == PowerUp.PowerUpType.BALL_SPEED)
+            if (m_superBallTimer > 0f)
             {
-                m_powerUpTimer = powerUp.Duration;
-                m_powerUpAmount = powerUp.FloatValue;
+                m_rigidbody.velocity = m_lastVelocity;
+            }
+        }
+
+        public void ApplyPowerUp(PowerUp powerUp)
+        {
+            switch (powerUp.Type)
+            {
+                case PowerUp.PowerUpType.BALL_SPEED:
+                    m_powerUpTimer = powerUp.Duration;
+                    m_powerUpAmount = powerUp.FloatValue;
+                    break;
+                case PowerUp.PowerUpType.SUPER_BALL:
+                    m_superBallTimer = powerUp.Duration;
+                    break;
             }
         }
     }

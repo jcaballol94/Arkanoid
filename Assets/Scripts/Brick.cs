@@ -22,6 +22,10 @@ namespace Caballol.Arkanoid
             if (--m_remainingLife == 0)
             {
                 gameObject.SetActive(false);
+
+                var ball = collision.gameObject.GetComponent<Ball>();
+                ball.BrickDestroyed();
+
                 // Notify with the position, to spawn power ups
                 onDie?.Invoke(transform.position);
             }
