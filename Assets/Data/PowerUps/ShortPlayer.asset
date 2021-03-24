@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: ShortPlayer
   m_EditorClassIdentifier: 
   m_visual: {fileID: 4259232102668985946, guid: bcc8103543f38dc4fbfede3c8dfbd464, type: 3}
+  m_type: 17
+  m_floatValue: 0.5
+  m_duration: 5

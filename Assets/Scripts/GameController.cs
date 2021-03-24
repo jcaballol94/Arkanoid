@@ -167,7 +167,12 @@ namespace Caballol.Arkanoid
 
         private void OnPowerUpPicked(PowerUp powerUp)
         {
-            Debug.LogError(powerUp.name + " picked!");
+            // Direct the power ups to the right target
+            var typeFlags = (PowerUp.PowerUpFlags)powerUp.Type;
+            if (typeFlags.HasFlag(PowerUp.PowerUpFlags.PLAYER))
+            {
+                m_player.ApplyPowerUp(powerUp);
+            }
         }
     }
 }

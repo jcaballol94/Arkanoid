@@ -21,6 +21,11 @@ namespace Caballol.Arkanoid
         private Vector2 m_averageVelocity;
         private bool m_active;
 
+        // Size powerup
+        private float m_baseSize;
+        private float m_powerUpTimer;
+        private bool m_powerUpActive;
+
         public bool IsCentered => Mathf.Approximately(0f, transform.position.x);
 
         private void Start()
@@ -32,10 +37,24 @@ namespace Caballol.Arkanoid
             m_averageVelocity = Vector3.zero;
 
             m_active = false;
+
+            m_powerUpActive = false;
+            m_baseSize = transform.localScale.x;
         }
 
         private void Update()
         {
+            if (m_powerUpActive)
+            {
+                m_powerUpTimer -= Time.deltaTime;
+                if (m_powerUpTimer <= 0f)
+                {
+                    m_powerUpActive = false;
+                    SetLengthBonus(1f);
+                }
+            }
+
+            // Don't process input if not active
             if (!m_active) return;
 
             if (Input.GetMouseButtonDown(0))
@@ -123,6 +142,23 @@ namespace Caballol.Arkanoid
 
             position = 0f;
             return false;
+        }
+
+        public void ApplyPowerUp(PowerUp powerUp)
+        {
+            if (powerUp.Type == PowerUp.PowerUpType.PLAYER_LENGTH)
+            {
+                m_powerUpActive = true;
+                m_powerUpTimer = powerUp.Duration;
+                SetLengthBonus(powerUp.FloatValue);
+            }
+        }
+
+        private void SetLengthBonus(float bonus)
+        {
+            var scale = transform.localScale;
+            scale.x = m_baseSize * bonus;
+            transform.localScale = scale;
         }
     }
 }
