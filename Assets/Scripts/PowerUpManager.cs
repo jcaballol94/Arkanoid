@@ -22,8 +22,11 @@ namespace Caballol.Arkanoid
 
                 var drop = dropGO.GetComponent<PowerUpDrop>();
                 drop.Speed = m_dropSpeed;
-                drop.PowerUp = m_possiblePowerUps[Random.Range(0, m_possiblePowerUps.Length)];
+                var powerUp = m_possiblePowerUps[Random.Range(0, m_possiblePowerUps.Length)];
+                drop.PowerUp = powerUp;
                 drop.onPicked += OnPicked;
+
+                Instantiate(powerUp.Visual, drop.transform);
             }
         }
 

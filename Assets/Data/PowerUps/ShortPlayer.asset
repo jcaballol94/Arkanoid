@@ -10,5 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 997efe08972f9c047abb7f3d87e8f8d7, type: 3}
-  m_Name: TestPowerUp
+  m_Name: ShortPlayer
   m_EditorClassIdentifier: 
+  m_visual: {fileID: 4259232102668985946, guid: bcc8103543f38dc4fbfede3c8dfbd464, type: 3}

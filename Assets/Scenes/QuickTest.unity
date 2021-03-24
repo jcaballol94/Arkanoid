@@ -212,6 +212,7 @@ MonoBehaviour:
   m_dropSpeed: 2
   m_possiblePowerUps:
   - {fileID: 11400000, guid: d5ce5517bc5d6204bb44ba641a60f8a0, type: 2}
+  - {fileID: 11400000, guid: 2e834a881fcee28408c8fa0cfd99e94b, type: 2}
 --- !u!4 &46484882
 Transform:
   m_ObjectHideFlags: 0
