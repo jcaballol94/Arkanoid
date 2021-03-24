@@ -26,6 +26,7 @@ namespace Caballol.Arkanoid
             m_rigidbody.isKinematic = false;
             m_rigidbody.velocity = direction * m_speed;
             m_powerUpTimer = -1f;
+            m_superBallTimer = -1f;
         }
 
         // Start is called before the first frame update
@@ -94,6 +95,12 @@ namespace Caballol.Arkanoid
                     m_superBallTimer = powerUp.Duration;
                     break;
             }
+        }
+
+        public void CancelPowerUps()
+        {
+            m_superBallTimer = -1f;
+            m_powerUpTimer = -1f;
         }
     }
 }

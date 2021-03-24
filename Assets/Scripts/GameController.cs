@@ -111,6 +111,7 @@ namespace Caballol.Arkanoid
         {
             m_powerUps.Clear();
             m_ball.Despawn();
+            m_ball.CancelPowerUps();
             m_player.Stop();
             m_player.CancelPowerUps();
         }

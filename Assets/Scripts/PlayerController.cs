@@ -162,7 +162,6 @@ namespace Caballol.Arkanoid
 
         private void SetLengthBonus(float bonus)
         {
-         
             var scale = transform.localScale;
             scale.x = m_baseSize * bonus;
             transform.localScale = scale;
