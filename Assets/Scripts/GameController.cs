@@ -10,6 +10,7 @@ namespace Caballol.Arkanoid
         [SerializeField] private Ball m_ball;
         [SerializeField] private PlayerController m_player;
         [SerializeField] private BrickManager m_bricks;
+        [SerializeField] private PowerUpManager m_powerUps;
 
         [Header("Settings")]
         [SerializeField] private int m_lives = 3;
@@ -27,8 +28,12 @@ namespace Caballol.Arkanoid
 
         private void Start()
         {
+            // Prepare the powerups
+            m_powerUps.onPicked += OnPowerUpPicked;
+
             // Prepare the bricks
             m_bricks.onLevelCleared += OnLevelCleared;
+            m_bricks.onBrickDestroyed += OnBrickDestroyed;
 
             // Prepare the ball
             m_initialBallPosition = m_ball.transform.position;
@@ -68,6 +73,12 @@ namespace Caballol.Arkanoid
             StartCoroutine(WinRoutine());
         }
 
+        private void OnBrickDestroyed (Vector3 position)
+        {
+            // Notify the power ups that a brick has been destroyed, to spawn if needed
+            m_powerUps.SpawnIfNeeded(position);
+        }
+
         private IEnumerator KickOffRoutine()
         {
             // Recenter the player
@@ -96,11 +107,16 @@ namespace Caballol.Arkanoid
             yield return KickOffRoutine();
         }
 
-        private IEnumerator WinRoutine()
+        private void StopPlaying()
         {
-            // Stop playing
+            m_powerUps.Clear();
             m_ball.Despawn();
             m_player.Stop();
+        }
+
+        private IEnumerator WinRoutine()
+        {
+            StopPlaying();
 
             // Show the win panel
             m_winPanel.SetActive(true);
@@ -118,9 +134,7 @@ namespace Caballol.Arkanoid
 
         private IEnumerator LoseRoutine()
         {
-            // Stop playing
-            m_ball.Despawn();
-            m_player.Stop();
+            StopPlaying();
 
             // Show the lose panel
             m_losePanel.SetActive(true);
@@ -149,6 +163,11 @@ namespace Caballol.Arkanoid
         public void Continue()
         {
             m_canContinue = true;
+        }
+
+        private void OnPowerUpPicked(PowerUp powerUp)
+        {
+            Debug.LogError(powerUp.name + " picked!");
         }
     }
 }

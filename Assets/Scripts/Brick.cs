@@ -6,7 +6,7 @@ namespace Caballol.Arkanoid
 {
     public class Brick : MonoBehaviour
     {
-        public event System.Action onDie;
+        public event System.Action<Vector3> onDie;
 
         [SerializeField] private int m_life = 1;
         private int m_remainingLife;
@@ -22,7 +22,8 @@ namespace Caballol.Arkanoid
             if (--m_remainingLife == 0)
             {
                 gameObject.SetActive(false);
-                onDie?.Invoke();
+                // Notify with the position, to spawn power ups
+                onDie?.Invoke(transform.position);
             }
         }
     }

@@ -155,6 +155,7 @@ MonoBehaviour:
   m_ball: {fileID: 121807347}
   m_player: {fileID: 1215952042}
   m_bricks: {fileID: 1858800936}
+  m_powerUps: {fileID: 46484881}
   m_lives: 3
   m_kickoffPanel: {fileID: 1682320559}
   m_winPanel: {fileID: 1885276386}
@@ -173,7 +174,56 @@ Transform:
   - {fileID: 121807351}
   - {fileID: 1215952041}
   - {fileID: 1858800935}
+  - {fileID: 46484882}
   m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &46484880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 46484882}
+  - component: {fileID: 46484881}
+  m_Layer: 0
+  m_Name: PowerUps
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &46484881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46484880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f83b0997f35146d4791c93fd2212470b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_powerUpDropPrefab: {fileID: 7844163826558343861, guid: 19d5b7f7781b1d64ba4bbed2cb6c86f9, type: 3}
+  m_spawnProbability: 0.5
+  m_dropSpeed: 2
+  m_possiblePowerUps:
+  - {fileID: 11400000, guid: d5ce5517bc5d6204bb44ba641a60f8a0, type: 2}
+--- !u!4 &46484882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46484880}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 32805807}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &56469293
@@ -188,7 +238,7 @@ GameObject:
   - component: {fileID: 56469297}
   - component: {fileID: 56469296}
   - component: {fileID: 56469295}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,7 +421,7 @@ GameObject:
   - component: {fileID: 121807347}
   - component: {fileID: 121807348}
   - component: {fileID: 121807352}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -595,7 +645,7 @@ GameObject:
   - component: {fileID: 258176408}
   - component: {fileID: 258176411}
   - component: {fileID: 258176410}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -676,7 +726,7 @@ GameObject:
   - component: {fileID: 306688730}
   - component: {fileID: 306688733}
   - component: {fileID: 306688732}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -915,7 +965,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 448466134}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Scenario
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1374,7 +1424,7 @@ GameObject:
   - component: {fileID: 974671011}
   - component: {fileID: 974671010}
   - component: {fileID: 974671009}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1559,7 +1609,7 @@ GameObject:
   - component: {fileID: 1215952042}
   - component: {fileID: 1215952038}
   - component: {fileID: 1215952037}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1998,7 +2048,7 @@ GameObject:
   - component: {fileID: 1785280585}
   - component: {fileID: 1785280584}
   - component: {fileID: 1785280583}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2576,7 +2626,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1987647814}
   - component: {fileID: 1987647815}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bottom
   m_TagString: Kill
   m_Icon: {fileID: 0}

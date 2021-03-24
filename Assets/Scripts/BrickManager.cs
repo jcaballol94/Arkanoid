@@ -7,6 +7,7 @@ namespace Caballol.Arkanoid
     public class BrickManager : MonoBehaviour
     {
         public event System.Action onLevelCleared;
+        public event System.Action<Vector3> onBrickDestroyed;
 
         [SerializeField] private Brick[] m_bricks;
 
@@ -27,11 +28,15 @@ namespace Caballol.Arkanoid
             }
         }
 
-        private void OnBrickDestroyed()
+        private void OnBrickDestroyed(Vector3 position)
         {
             if (--m_bricksRemaining <= 0)
             {
                 onLevelCleared?.Invoke();
+            }
+            else
+            {
+                onBrickDestroyed?.Invoke(position);
             }
         }
     }

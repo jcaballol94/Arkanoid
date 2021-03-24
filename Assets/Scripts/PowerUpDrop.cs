@@ -9,15 +9,14 @@ namespace Caballol.Arkanoid
         public event System.Action<PowerUp> onPicked;
 
         public PowerUp PowerUp { get; set; }
-
-        [SerializeField] private float m_speed;
+        public float Speed { get; set; }
 
         private Rigidbody2D m_rigidbody;
 
-        private void Awake()
+        private void Start()
         {
             m_rigidbody = GetComponent<Rigidbody2D>();
-            m_rigidbody.velocity = Vector2.down * m_speed;
+            m_rigidbody.velocity = Vector2.down * Speed;
         }
 
         private void OnCollisionEnter2D(Collision2D coll)
@@ -28,7 +27,7 @@ namespace Caballol.Arkanoid
             }
             else if (coll.gameObject.CompareTag("Player"))
             {
-                onPicked?.(PowerUp);
+                onPicked?.Invoke(PowerUp);
                 Destroy(gameObject);
             }
         }
