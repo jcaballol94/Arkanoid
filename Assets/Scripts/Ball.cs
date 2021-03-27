@@ -106,10 +106,7 @@ namespace Caballol.Arkanoid
 
         public void Clone (Ball other)
         {
-            gameObject.SetActive(true);
-
-            var rotation = Quaternion.AngleAxis(Random.Range(-45f, 45f), Vector3.forward);
-            m_rigidbody.velocity = rotation * other.m_rigidbody.velocity;
+            transform.position = other.transform.position;
 
             m_kickedOff = other.m_kickedOff;
 
@@ -118,6 +115,12 @@ namespace Caballol.Arkanoid
 
             m_lastVelocity = other.m_lastVelocity;
             m_superBallTimer = other.m_superBallTimer;
+
+            gameObject.SetActive(true);
+
+            var angle = Random.Range(-45f, 45f);
+            var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            m_rigidbody.velocity = rotation * other.m_rigidbody.velocity;
         }
     }
 }

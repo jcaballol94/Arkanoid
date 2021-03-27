@@ -22,6 +22,7 @@ namespace Caballol.Arkanoid
             for (int i = 0; i < m_numBalls; ++i)
             {
                 var go = Instantiate(m_ballPrefab);
+                go.transform.SetParent(transform);
                 go.SetActive(false);
                 var ball = go.GetComponent<Ball>();
                 ball.onKilled += () => OnBallKilled(ball);

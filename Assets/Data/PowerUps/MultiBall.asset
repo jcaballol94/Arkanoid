@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 997efe08972f9c047abb7f3d87e8f8d7, type: 3}
   m_Name: MultiBall
   m_EditorClassIdentifier: 
-  m_visual: {fileID: 7933805618682358439, guid: 6afe9020188b44440b6c5ca45b874d31, type: 3}
+  m_visual: {fileID: 7933805618682358439, guid: e4dec5eee7c0b5c4e923198d29657443, type: 3}
   m_type: 66
   m_floatValue: 2
   m_duration: 5
