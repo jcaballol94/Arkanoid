@@ -7,7 +7,7 @@ namespace Caballol.Arkanoid
     public class GameController : MonoBehaviour
     {
         [Header("Objects")]
-        [SerializeField] private Ball m_ball;
+        [SerializeField] private BallManager m_balls;
         [SerializeField] private PlayerController m_player;
         [SerializeField] private BrickManager m_bricks;
         [SerializeField] private PowerUpManager m_powerUps;
@@ -16,13 +16,12 @@ namespace Caballol.Arkanoid
         [SerializeField] private int m_lives = 3;
 
         [Header("UI")]
-        [SerializeField] private UI.KickOffPanel m_kickoffPanel;
         [SerializeField] private GameObject m_winPanel;
         [SerializeField] private GameObject m_losePanel;
+        [SerializeField] private UI.KickOffPanel m_kickoffPanel;
 
         public int Lives => m_remainingLives;
 
-        private Vector3 m_initialBallPosition;
         private bool m_canContinue;
         private int m_remainingLives;
 
@@ -36,11 +35,10 @@ namespace Caballol.Arkanoid
             m_bricks.onBrickDestroyed += OnBrickDestroyed;
 
             // Prepare the ball
-            m_initialBallPosition = m_ball.transform.position;
-            m_ball.onKilled += OnBallKilled;
+            m_balls.onPlayerDied += OnBallKilled;
 
             // Prepare the kickof panel
-            m_kickoffPanel.SetBallPosition(m_initialBallPosition);
+            m_kickoffPanel.SetBallPosition(m_balls.transform.position);
             m_kickoffPanel.onKickoffPressed += KickOffPressed;
 
             // First kickoff
@@ -87,8 +85,7 @@ namespace Caballol.Arkanoid
             yield return new WaitUntil(() => m_player.IsCentered);
 
             // Respawn the ball and open the kick off panel
-            m_ball.transform.position = m_initialBallPosition;
-            m_ball.Spawn();
+            m_balls.SpawnBall();
             m_kickoffPanel.gameObject.SetActive(true);
         }
 
@@ -110,8 +107,7 @@ namespace Caballol.Arkanoid
         private void StopPlaying()
         {
             m_powerUps.Clear();
-            m_ball.Despawn();
-            m_ball.CancelPowerUps();
+            m_balls.DespawnBalls();
             m_player.Stop();
             m_player.CancelPowerUps();
         }
@@ -156,7 +152,7 @@ namespace Caballol.Arkanoid
         {
             // Close the kickoffpanel and kick off the ball
             m_kickoffPanel.gameObject.SetActive(false);
-            m_ball.KickOff(direction);
+            m_balls.KickOff(direction);
 
             // Return control to the player
             m_player.Release();
@@ -177,7 +173,7 @@ namespace Caballol.Arkanoid
             }
             else if (typeFlags.HasFlag(PowerUp.PowerUpFlags.BALL))
             {
-                m_ball.ApplyPowerUp(powerUp);
+                m_balls.ApplyPowerUp(powerUp);
             }
         }
     }

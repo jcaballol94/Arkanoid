@@ -25,14 +25,16 @@ namespace Caballol.Arkanoid
             BALL = 0x02,
 
             STATS_BONUS = 0x10,
-            KEEP_DIR = 0x20
+            KEEP_DIR = 0x20,
+            MULTIPLY = 0x40
         }
 
         public enum PowerUpType
         {
             PLAYER_LENGTH = PowerUpFlags.PLAYER | PowerUpFlags.STATS_BONUS,
             BALL_SPEED = PowerUpFlags.BALL | PowerUpFlags.STATS_BONUS,
-            SUPER_BALL = PowerUpFlags.BALL | PowerUpFlags.KEEP_DIR
+            SUPER_BALL = PowerUpFlags.BALL | PowerUpFlags.KEEP_DIR,
+            MULTI_BALL = PowerUpFlags.BALL | PowerUpFlags.MULTIPLY
         }
     }
 }

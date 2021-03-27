@@ -45,6 +45,7 @@ namespace Caballol.Arkanoid
 
         public void Despawn()
         {
+            CancelPowerUps();
             gameObject.SetActive(false);
         }
 
@@ -101,6 +102,22 @@ namespace Caballol.Arkanoid
         {
             m_superBallTimer = -1f;
             m_powerUpTimer = -1f;
+        }
+
+        public void Clone (Ball other)
+        {
+            gameObject.SetActive(true);
+
+            var rotation = Quaternion.AngleAxis(Random.Range(-45f, 45f), Vector3.forward);
+            m_rigidbody.velocity = rotation * other.m_rigidbody.velocity;
+
+            m_kickedOff = other.m_kickedOff;
+
+            m_powerUpTimer = other.m_powerUpTimer;
+            m_powerUpAmount = other.m_powerUpAmount;
+
+            m_lastVelocity = other.m_lastVelocity;
+            m_superBallTimer = other.m_superBallTimer;
         }
     }
 }
