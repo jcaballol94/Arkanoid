@@ -31,7 +31,6 @@ namespace Caballol.Arkanoid.Gameplay
             {
                 if (GetMousePosition(out var mousePos))
                 {
-                    m_move = true;
                     m_offset = transform.position.x - mousePos;
                 }
             }
@@ -39,6 +38,7 @@ namespace Caballol.Arkanoid.Gameplay
             {
                 if (GetMousePosition(out var newPos))
                 {
+                    m_move = true;
                     m_target = newPos + m_offset;
                 }
             }
