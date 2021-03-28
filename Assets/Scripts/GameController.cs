@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Caballol.Arkanoid
+namespace Caballol.Arkanoid.Gameplay
 {
     public class GameController : MonoBehaviour
     {
+        [Header("Actors")]
+        [SerializeField] private GameObject m_playerActor;
+
+        [Header("References")]
+        [SerializeField] private Transform m_playerStartPosition;
+
         [Header("Objects")]
         [SerializeField] private BallManager m_balls;
-        [SerializeField] private PlayerController m_player;
         [SerializeField] private BrickManager m_bricks;
         [SerializeField] private PowerUpManager m_powerUps;
 
@@ -25,8 +30,13 @@ namespace Caballol.Arkanoid
         private bool m_canContinue;
         private int m_remainingLives;
 
+        private Player m_player;
+
         private void Start()
         {
+            var playerGO = Instantiate(m_playerActor, m_playerStartPosition.position, Quaternion.identity, transform);
+            m_player = playerGO.GetComponent<Player>();
+
             // Prepare the powerups
             m_powerUps.onPicked += OnPowerUpPicked;
 
@@ -80,9 +90,7 @@ namespace Caballol.Arkanoid
         private IEnumerator KickOffRoutine()
         {
             // Recenter the player
-            m_player.Recenter();
-
-            yield return new WaitUntil(() => m_player.IsCentered);
+            yield return m_player.RecenterRoutine();
 
             // Respawn the ball and open the kick off panel
             m_balls.SpawnBall();

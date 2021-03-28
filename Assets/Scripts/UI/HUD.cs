@@ -7,7 +7,7 @@ namespace Caballol.Arkanoid.UI
 {
     public class HUD : MonoBehaviour
     {
-        [SerializeField] private GameController m_game;
+        [SerializeField] private Gameplay.GameController m_game;
         [SerializeField] private Text m_score;
         
         // Update is called once per frame
