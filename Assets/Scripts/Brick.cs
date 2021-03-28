@@ -8,6 +8,9 @@ namespace Caballol.Arkanoid
     {
         public event System.Action<Vector3> onDie;
 
+
+        public bool IsDestroyable => m_destroyable;
+        [SerializeField] private bool m_destroyable = true;
         [SerializeField] private int m_life = 1;
         private int m_remainingLife;
 
@@ -19,7 +22,7 @@ namespace Caballol.Arkanoid
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (--m_remainingLife == 0)
+            if (--m_remainingLife == 0 && m_destroyable)
             {
                 gameObject.SetActive(false);
 

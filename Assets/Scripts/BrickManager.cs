@@ -17,14 +17,17 @@ namespace Caballol.Arkanoid
         {
             m_bricksRemaining = 0;
 
-            for (int i = 0; i < m_bricks.Length; ++i)
+            foreach (var brick in m_bricks)
             {
-                ++m_bricksRemaining;
-                m_bricks[i].Spawn();
+                if (brick.IsDestroyable)
+                {
+                    ++m_bricksRemaining;
+                }
+                brick.Spawn();
 
                 // Ensure that we don't register twice
-                m_bricks[i].onDie -= OnBrickDestroyed;
-                m_bricks[i].onDie += OnBrickDestroyed;
+                brick.onDie -= OnBrickDestroyed;
+                brick.onDie += OnBrickDestroyed;
             }
         }
 
