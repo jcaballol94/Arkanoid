@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6090701684381457880, guid: 9a25a662dfd0a1e4a843cbe2cba48d7b, type: 3}
       propertyPath: m_Name
-      value: MetalBrick
+      value: MetalBrick Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8907086957096770565, guid: 9a25a662dfd0a1e4a843cbe2cba48d7b, type: 3}
       propertyPath: m_RootOrder
@@ -62,6 +62,6 @@ PrefabInstance:
     - target: {fileID: 9085192324174352579, guid: 9a25a662dfd0a1e4a843cbe2cba48d7b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100004, guid: b451a052397f03c4f8a04d915d1c0492, type: 3}
+      objectReference: {fileID: 2100000, guid: 527143585521a9b47bedf44b03752e5d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a25a662dfd0a1e4a843cbe2cba48d7b, type: 3}
