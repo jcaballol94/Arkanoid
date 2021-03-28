@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_centerSpeed: 10
-  m_acceleration: 50
+  m_acceleration: 20
 --- !u!114 &3660332867860442433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ff73fd05f42ae4985546cdc936e2a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_maxSpeed: 50
 --- !u!33 &8799361560933367747
 MeshFilter:
   m_ObjectHideFlags: 0

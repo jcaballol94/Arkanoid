@@ -90,6 +90,7 @@ namespace Caballol.Arkanoid.Gameplay
         private IEnumerator KickOffRoutine()
         {
             // Recenter the player
+            m_player.Stop();
             yield return m_player.RecenterRoutine();
 
             // Respawn the ball and open the kick off panel

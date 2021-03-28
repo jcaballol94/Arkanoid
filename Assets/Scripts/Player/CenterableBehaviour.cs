@@ -36,11 +36,10 @@ namespace Caballol.Arkanoid.Gameplay
         {
             if (!m_centering) return;
 
-            Debug.LogError("Centering");
 
             // Finish the center
             var distance = Vector3.Distance(m_center, transform.position);
-            if (distance < 0.01f)
+            if (distance < 0.05f)
             {
                 m_centering = false;
                 m_rigidbody.velocity = Vector2.zero;
@@ -51,9 +50,9 @@ namespace Caballol.Arkanoid.Gameplay
             var stopTime = Mathf.Sqrt((2f * distance) / m_acceleration);
             var maxSpeed = m_acceleration * stopTime;
 
-            var targetSpeed = Mathf.Min(maxSpeed, m_centerSpeed);
-            var speed = Mathf.MoveTowards(m_rigidbody.velocity.magnitude, targetSpeed, Time.deltaTime);
-            m_rigidbody.velocity = (m_center - transform.position) * speed;
+            var speed = Mathf.Min(maxSpeed, m_centerSpeed);
+            speed = Mathf.MoveTowards(m_rigidbody.velocity.magnitude, speed, m_acceleration * Time.deltaTime);
+            m_rigidbody.velocity = (m_center - transform.position).normalized * speed;
         }
 
         public IEnumerator CenterRoutine()
