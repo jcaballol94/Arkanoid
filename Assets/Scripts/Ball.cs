@@ -35,11 +35,12 @@ namespace Caballol.Arkanoid
             m_rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        public void Spawn()
+        public void Spawn(Vector3 position)
         {
             m_rigidbody.velocity = Vector3.zero;
             m_rigidbody.isKinematic = true;
             m_kickedOff = false;
+            transform.position = position;
             gameObject.SetActive(true);
         }
 
@@ -52,11 +53,17 @@ namespace Caballol.Arkanoid
         private void Update()
         {
             m_powerUpTimer -= Time.deltaTime;
+            m_superBallTimer -= Time.deltaTime;
         }
 
         private void FixedUpdate()
         {
-            if (!m_kickedOff) return;
+            if (!m_kickedOff)
+            {
+                m_rigidbody.velocity = Vector3.zero;
+                m_lastVelocity = Vector3.zero;
+                return;
+            }
 
             // Keep the speed constant
             var velocity = m_rigidbody.velocity.normalized * Speed;

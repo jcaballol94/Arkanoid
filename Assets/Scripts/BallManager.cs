@@ -38,8 +38,7 @@ namespace Caballol.Arkanoid
             m_inactiveBalls.Remove(ball);
 
             m_activeBalls.Add(ball);
-            ball.transform.position = transform.position;
-            ball.Spawn();
+            ball.Spawn(transform.position);
         }
 
         public void DespawnBalls()
