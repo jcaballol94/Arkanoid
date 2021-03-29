@@ -15,11 +15,15 @@ namespace Caballol.Arkanoid.Gameplay
         private bool m_move;
 
         private Camera m_camera;
-        private Rigidbody2D m_rigidbody;
+        [SerializeField] [HideInInspector] private Rigidbody2D m_rigidbody;
 
         private void Awake()
         {
             m_camera = Camera.main;
+        }
+
+        private void OnValidate()
+        {
             m_rigidbody = GetComponent<Rigidbody2D>();
         }
 

@@ -9,9 +9,9 @@ namespace Caballol.Arkanoid.Gameplay
     {
         [SerializeField] [Range(0f, 1f)] private float m_stickiness = 0.5f;
 
-        private Rigidbody2D m_rigidbody;
+        [SerializeField] [HideInInspector] private Rigidbody2D m_rigidbody;
 
-        private void Awake()
+        private void OnValidate()
         {
             m_rigidbody = GetComponent<Rigidbody2D>();
         }

@@ -10,7 +10,8 @@ namespace Caballol.Arkanoid.Gameplay
         [SerializeField] private float m_centerSpeed = 10f;
         [SerializeField] private float m_acceleration = 0.2f;
 
-        private Rigidbody2D m_rigidbody;
+        [SerializeField] [HideInInspector] private Rigidbody2D m_rigidbody;
+
         private Vector3 m_center;
         private bool m_centering;
 
@@ -18,11 +19,12 @@ namespace Caballol.Arkanoid.Gameplay
         {
             m_centerSpeed = Mathf.Max(0.1f, m_centerSpeed);
             m_acceleration = Mathf.Max(0.1f, m_acceleration);
+
+            m_rigidbody = GetComponent<Rigidbody2D>();
         }
 
         private void Awake()
         {
-            m_rigidbody = GetComponent<Rigidbody2D>();
             m_center = transform.position;
             m_centering = false;
         }

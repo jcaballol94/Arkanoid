@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_stickiness: 0.5
+  m_rigidbody: {fileID: 4986524245513812161}
 --- !u!114 &5858394884247944711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,6 +80,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_centerSpeed: 10
   m_acceleration: 20
+  m_rigidbody: {fileID: 4986524245513812161}
 --- !u!114 &3660332867860442433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_maxSpeed: 50
+  m_rigidbody: {fileID: 4986524245513812161}
 --- !u!33 &8799361560933367747
 MeshFilter:
   m_ObjectHideFlags: 0

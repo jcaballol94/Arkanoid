@@ -9,11 +9,11 @@ namespace Caballol.Arkanoid.Gameplay
         public Vector3 BallSpawnPosition => m_ballSpawnReference ? m_ballSpawnReference.position : Vector3.zero;
         [SerializeField] private Transform m_ballSpawnReference;
 
-        private CenterableBehaviour m_centerable;
-        private DraggableBehaviour m_draggable;
-        private LengthStat m_length;
+        [SerializeField] [HideInInspector] private CenterableBehaviour m_centerable;
+        [SerializeField] [HideInInspector] DraggableBehaviour m_draggable;
+        [SerializeField] [HideInInspector] private LengthStat m_length;
 
-        private void Awake()
+        private void OnValidate()
         {
             m_centerable = GetComponentInChildren<CenterableBehaviour>();
             m_draggable = GetComponentInChildren<DraggableBehaviour>();
