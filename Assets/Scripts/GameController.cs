@@ -119,6 +119,7 @@ namespace Caballol.Arkanoid.Gameplay
             m_balls.DespawnBalls();
             m_player.Stop();
             m_player.CancelPowerUps();
+            m_bricks.EndLevel();
         }
 
         private IEnumerator WinRoutine()

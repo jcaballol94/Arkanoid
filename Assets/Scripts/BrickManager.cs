@@ -31,6 +31,19 @@ namespace Caballol.Arkanoid.Gameplay
             }
         }
 
+        public void EndLevel()
+        {
+            m_bricksRemaining = 0;
+
+            foreach (var brick in m_bricks)
+            {
+                if (brick.gameObject.activeSelf)
+                {
+                    brick.Despawn();
+                }
+            }
+        }
+
         private void OnBrickDestroyed(Vector3 position)
         {
             if (--m_bricksRemaining <= 0)

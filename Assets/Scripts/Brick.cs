@@ -31,6 +31,11 @@ namespace Caballol.Arkanoid.Gameplay
             }
         }
 
+        private void OnDisable()
+        {
+            StopAllCoroutines();
+        }
+
         public void Spawn()
         {
             gameObject.SetActive(true);
@@ -39,6 +44,17 @@ namespace Caballol.Arkanoid.Gameplay
             {
                 m_destroyable.Spawn();
             }
+        }
+
+        public void Despawn()
+        {
+            StartCoroutine(DespawnRoutine());
+        }
+
+        private IEnumerator DespawnRoutine()
+        {
+            m_scaleInOut.ScaleOut();
+            yield return new WaitWhile(() => m_scaleInOut.Fading);
         }
     }
 }
