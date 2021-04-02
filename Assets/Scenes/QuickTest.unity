@@ -2170,6 +2170,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1858800935}
     m_Modifications:
+    - target: {fileID: 2003930565555640037, guid: 9a25a662dfd0a1e4a843cbe2cba48d7b, type: 3}
+      propertyPath: m_killedByTag
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 6090701684381457880, guid: 9a25a662dfd0a1e4a843cbe2cba48d7b, type: 3}
       propertyPath: m_Name
       value: WoodBrick
@@ -4955,6 +4959,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_numBalls: 3
+  m_ballSpeed: 10
+  m_ballSpeedBlend: 0.2
+  m_cloneMaxAngle: 10
   m_ballPrefab: {fileID: 2016083800232039470, guid: 5b6f0dd386157e949964da45dcd1ecf7, type: 3}
 --- !u!4 &6735468581569718077
 Transform:

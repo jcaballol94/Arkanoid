@@ -94,7 +94,7 @@ namespace Caballol.Arkanoid.Gameplay
             yield return m_player.RecenterRoutine();
 
             // Respawn the ball and open the kick off panel
-            m_balls.SpawnBall();
+            m_balls.SpawnBall(m_player.BallSpawnPosition);
             m_kickoffPanel.gameObject.SetActive(true);
         }
 

@@ -9,11 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3280301167263850557, guid: 9a25a662dfd0a1e4a843cbe2cba48d7b, type: 3}
       propertyPath: m_destroyable
-      value: 0
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6090701684381457880, guid: 9a25a662dfd0a1e4a843cbe2cba48d7b, type: 3}
       propertyPath: m_Name
-      value: MetalBrick Variant
+      value: MetalBrick Variant (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8907086957096770565, guid: 9a25a662dfd0a1e4a843cbe2cba48d7b, type: 3}
       propertyPath: m_RootOrder
@@ -21,11 +21,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8907086957096770565, guid: 9a25a662dfd0a1e4a843cbe2cba48d7b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8907086957096770565, guid: 9a25a662dfd0a1e4a843cbe2cba48d7b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 15.5
       objectReference: {fileID: 0}
     - target: {fileID: 8907086957096770565, guid: 9a25a662dfd0a1e4a843cbe2cba48d7b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -63,5 +63,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 527143585521a9b47bedf44b03752e5d, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2003930565555640037, guid: 9a25a662dfd0a1e4a843cbe2cba48d7b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9a25a662dfd0a1e4a843cbe2cba48d7b, type: 3}

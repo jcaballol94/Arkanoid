@@ -2,132 +2,85 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Caballol.Arkanoid
+namespace Caballol.Arkanoid.Gameplay
 {
     public class Ball : MonoBehaviour
     {
         public event System.Action onKilled;
 
-        private float Speed => (m_powerUpTimer >= 0f) ? m_speed * m_powerUpAmount : m_speed;
-        [SerializeField] private float m_speed = 5f;
+        [SerializeField] [HideInInspector] private ScaleInOut m_scaleInOut;
+        [SerializeField] [HideInInspector] private BallMovement m_movement;
+        [SerializeField] [HideInInspector] private GoThrough m_goThrough;
+        [SerializeField] [HideInInspector] private Destroyable m_destroyable;
 
-        private Rigidbody2D m_rigidbody;
-        private bool m_kickedOff;
+        public float Speed { get => m_movement.Speed; set => m_movement.Speed = value; }
+        public bool SuperBall { get => m_goThrough.Active; set => m_goThrough.Active = value; }
+        public Vector2 Direction => m_movement.Direction;
 
-        private float m_powerUpTimer;
-        private float m_powerUpAmount;
-
-        private Vector2 m_lastVelocity;
-        private float m_superBallTimer;
-
-        public void KickOff(Vector3 direction)
+        private void OnValidate()
         {
-            m_kickedOff = true;
-            m_rigidbody.isKinematic = false;
-            m_rigidbody.velocity = direction * m_speed;
-            m_powerUpTimer = -1f;
-            m_superBallTimer = -1f;
+            m_scaleInOut = GetComponentInChildren<ScaleInOut>();
+            m_movement = GetComponentInChildren<BallMovement>();
+            m_goThrough = GetComponentInChildren<GoThrough>();
+            m_destroyable = GetComponentInChildren<Destroyable>();
         }
 
-        // Start is called before the first frame update
         private void Awake()
         {
-            m_rigidbody = GetComponent<Rigidbody2D>();
+            // Register the killed notification
+            m_destroyable.onDestroyed += () =>
+            {
+                onKilled?.Invoke();
+                gameObject.SetActive(false);
+            };
         }
 
-        public void Spawn(Vector3 position)
+        public void KickOff(Vector3 a_direction)
         {
-            m_rigidbody.velocity = Vector3.zero;
-            m_rigidbody.isKinematic = true;
-            m_kickedOff = false;
-            transform.position = position;
+            m_movement.Kickoff(a_direction);
+        }
+
+        public void Spawn(Vector3 a_position)
+        {
+            // Setup the position
+            var radius = m_scaleInOut.BaseScale.y;
+            transform.position = a_position + radius * Vector3.up;
+
+            // Enable the ball
             gameObject.SetActive(true);
+
+            // Don't move until kickoff
+            m_movement.Stop();
+
+            // Become destroyable again
+            m_destroyable.Spawn();
+        }
+
+        public void InsertImmediate(Vector3 a_position, Vector2 a_direction)
+        {
+            // Setup the position
+            transform.position = a_position;
+
+            // Enable the ball
+            gameObject.SetActive(true);
+
+            // Start moving immediately
+            m_movement.Kickoff(a_direction);
+
+            // Become destroyable again
+            m_destroyable.Spawn();
         }
 
         public void Despawn()
         {
-            CancelPowerUps();
+            StartCoroutine(DespawnRoutine());
+        }
+
+        private IEnumerator DespawnRoutine()
+        {
+            m_scaleInOut.ScaleOut();
+            yield return new WaitWhile(() => m_scaleInOut.Fading);
             gameObject.SetActive(false);
-        }
-
-        private void Update()
-        {
-            m_powerUpTimer -= Time.deltaTime;
-            m_superBallTimer -= Time.deltaTime;
-        }
-
-        private void FixedUpdate()
-        {
-            if (!m_kickedOff)
-            {
-                m_rigidbody.velocity = Vector3.zero;
-                m_lastVelocity = Vector3.zero;
-                return;
-            }
-
-            // Keep the speed constant
-            var velocity = m_rigidbody.velocity.normalized * Speed;
-            // Make sure that the ball always moves vertically
-            if (Mathf.Abs(velocity.y) < 0.1f) velocity.y = -0.1f;
-
-            m_lastVelocity = velocity;
-            m_rigidbody.velocity = velocity;
-        }
-
-        private void OnCollisionEnter2D(Collision2D coll)
-        {
-            if (coll.gameObject.CompareTag("Kill"))
-            {
-                Despawn();
-                onKilled?.Invoke();
-            }
-        }
-
-        public void BrickDestroyed()
-        {
-            if (m_superBallTimer > 0f)
-            {
-                m_rigidbody.velocity = m_lastVelocity;
-            }
-        }
-
-        public void ApplyPowerUp(PowerUp powerUp)
-        {
-            switch (powerUp.Type)
-            {
-                case PowerUp.PowerUpType.BALL_SPEED:
-                    m_powerUpTimer = powerUp.Duration;
-                    m_powerUpAmount = powerUp.FloatValue;
-                    break;
-                case PowerUp.PowerUpType.SUPER_BALL:
-                    m_superBallTimer = powerUp.Duration;
-                    break;
-            }
-        }
-
-        public void CancelPowerUps()
-        {
-            m_superBallTimer = -1f;
-            m_powerUpTimer = -1f;
-        }
-
-        public void Clone (Ball other)
-        {
-            transform.position = other.transform.position;
-
-            m_kickedOff = other.m_kickedOff;
-
-            m_powerUpTimer = other.m_powerUpTimer;
-            m_powerUpAmount = other.m_powerUpAmount;
-
-            m_lastVelocity = other.m_lastVelocity;
-            m_superBallTimer = other.m_superBallTimer;
-
-            gameObject.SetActive(true);
-
-            var angle = Random.Range(-45f, 45f);
-            var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            m_rigidbody.velocity = rotation * other.m_rigidbody.velocity;
         }
     }
 }
