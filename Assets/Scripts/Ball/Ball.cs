@@ -54,6 +54,9 @@ namespace Caballol.Arkanoid.Gameplay
 
             // Become destroyable again
             m_destroyable.Spawn();
+
+            // Put the ball in
+            m_scaleInOut.ScaleIn();
         }
 
         public void InsertImmediate(Vector3 a_position, Vector2 a_direction)
