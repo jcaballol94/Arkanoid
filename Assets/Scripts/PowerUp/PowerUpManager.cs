@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Caballol.Arkanoid
+namespace Caballol.Arkanoid.Gameplay
 {
     public class PowerUpManager : MonoBehaviour
     {
@@ -10,23 +10,36 @@ namespace Caballol.Arkanoid
 
         [SerializeField] private GameObject m_powerUpDropPrefab;
         [SerializeField] [Range(0f, 1f)] private float m_spawnProbability = 0.5f;
-        [SerializeField] private float m_dropSpeed = 1f;
         [SerializeField] private PowerUp[] m_possiblePowerUps;
 
-        public void SpawnIfNeeded (Vector3 position)
+        private List<PowerUpDrop> m_dropPool = new List<PowerUpDrop>();
+
+        private void Awake()
         {
-            if (Random.value < m_spawnProbability)
+            foreach (var powerUp in m_possiblePowerUps)
             {
                 var dropGO = Instantiate(m_powerUpDropPrefab, transform);
-                dropGO.transform.position = position;
-
                 var drop = dropGO.GetComponent<PowerUpDrop>();
-                drop.Speed = m_dropSpeed;
-                var powerUp = m_possiblePowerUps[Random.Range(0, m_possiblePowerUps.Length)];
+
                 drop.PowerUp = powerUp;
                 drop.onPicked += OnPicked;
 
                 Instantiate(powerUp.Visual, drop.transform);
+
+                dropGO.SetActive(false);
+                m_dropPool.Add(drop);
+            }
+        }
+
+        public void SpawnIfNeeded (Vector3 a_position)
+        {
+            if (Random.value < m_spawnProbability)
+            {
+                var powerUp = m_dropPool[Random.Range(0, m_possiblePowerUps.Length)];
+                if (powerUp && !powerUp.gameObject.activeSelf)
+                {
+                    powerUp.Spawn(a_position);
+                }
             }
         }
 
