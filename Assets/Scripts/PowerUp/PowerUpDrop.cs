@@ -42,5 +42,17 @@ namespace Caballol.Arkanoid.Gameplay
             gameObject.SetActive(true);
             m_scaleInOut.ScaleIn();
         }
+
+        public void Despawn()
+        {
+            StartCoroutine(DespawnRoutine());
+        }
+
+        private IEnumerator DespawnRoutine()
+        {
+            m_scaleInOut.ScaleOut();
+            yield return new WaitWhile(() => m_scaleInOut.Fading);
+            gameObject.SetActive(false);
+        }
     }
 }

@@ -46,9 +46,12 @@ namespace Caballol.Arkanoid.Gameplay
         public void Clear()
         {
             // Remove all the powerups
-            for (int i = transform.childCount - 1; i >= 0; --i)
+            foreach (var drop in m_dropPool)
             {
-                Destroy(transform.GetChild(i).gameObject);
+                if (drop.gameObject.activeSelf)
+                {
+                    drop.Despawn();
+                }
             }
         }
 
