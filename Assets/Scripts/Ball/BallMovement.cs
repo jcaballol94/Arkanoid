@@ -8,6 +8,7 @@ namespace Caballol.Arkanoid.Gameplay
     public class BallMovement : MonoBehaviour
     {
         [HideInInspector] [SerializeField] private Rigidbody2D m_rigidbody;
+        [SerializeField] private float m_minVerticalSpeed = 0.1f;
 
         public float Speed { get; set; }
         public Vector2 Direction 
@@ -21,6 +22,8 @@ namespace Caballol.Arkanoid.Gameplay
         private void OnValidate()
         {
             m_rigidbody = GetComponent<Rigidbody2D>();
+
+            m_minVerticalSpeed = Mathf.Max(0f, m_minVerticalSpeed);
         }
 
         public void Kickoff (Vector2 a_direction)
@@ -40,7 +43,13 @@ namespace Caballol.Arkanoid.Gameplay
         {
             if (!m_move) return;
 
-            m_rigidbody.velocity = Direction * Speed;
+            var vel = Direction * Speed;
+            if (Mathf.Abs(vel.y) < m_minVerticalSpeed)
+            {
+                vel.y = -m_minVerticalSpeed;
+            }
+
+            m_rigidbody.velocity = vel;
         }
     }
 }
