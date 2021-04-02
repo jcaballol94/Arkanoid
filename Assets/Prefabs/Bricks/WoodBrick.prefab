@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_lives: 1
-  m_killedByTag: Ball
+  m_killedByTag: Player
 --- !u!61 &4515394938323919009
 BoxCollider2D:
   m_ObjectHideFlags: 0
