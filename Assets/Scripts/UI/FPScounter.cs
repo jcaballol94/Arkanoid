@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Caballol
+namespace Caballol.Arkanoid.UI
 {
-    public class FPScounter : MonoBehaviour
+    public class FPScounter : Panel<FPScounter>
     {
         [SerializeField] private Text m_text;
 
         private void Update()
         {
-            m_text.text = (1f / Time.deltaTime).ToString("F0");
+            m_text.text = (1f / Time.unscaledDeltaTime).ToString("F0");
         }
     }
 }

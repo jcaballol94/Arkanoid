@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Caballol.Arkanoid.UI
 {
-    public class HUD : MonoBehaviour
+    public class HUD : Panel<HUD>
     {
         [SerializeField] private Gameplay.GameController m_game;
         [SerializeField] private Text m_score;

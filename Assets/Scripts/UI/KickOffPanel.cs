@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Caballol.Arkanoid.UI
 {
-    public class KickOffPanel : MonoBehaviour
+    public class KickOffPanel : FullscreenButtonPanel<KickOffPanel>
     {
         public event System.Action<Vector3> onKickoffPressed;
 
@@ -14,9 +14,17 @@ namespace Caballol.Arkanoid.UI
 
         private float m_angle = 0f;
 
-        public void SetBallPosition(Vector3 position)
+        public static KickOffPanel Instance => PanelInstance as KickOffPanel;
+
+        public static void Open(Vector3 a_position)
         {
-            var screenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, position);
+            Instance.SetBallPosition(a_position);
+            Open();
+        }
+
+        private void SetBallPosition(Vector3 a_position)
+        {
+            var screenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, a_position);
             m_directionIndicator.position = screenPos;
         }
 
@@ -36,7 +44,7 @@ namespace Caballol.Arkanoid.UI
             m_directionIndicator.transform.rotation = Quaternion.AngleAxis(m_angle, Vector3.forward);
         }
 
-        public void OnPressed()
+        protected override void OnClosed()
         {
             onKickoffPressed?.Invoke(Quaternion.AngleAxis(m_angle, Vector3.forward) * Vector3.up);
         }

@@ -20,11 +20,6 @@ namespace Caballol.Arkanoid.Gameplay
         [Header("Settings")]
         [SerializeField] private int m_lives = 3;
 
-        [Header("UI")]
-        [SerializeField] private GameObject m_winPanel;
-        [SerializeField] private GameObject m_losePanel;
-        [SerializeField] private UI.KickOffPanel m_kickoffPanel;
-
         public int Lives => m_remainingLives;
 
         private bool m_canContinue;
@@ -48,8 +43,9 @@ namespace Caballol.Arkanoid.Gameplay
             m_balls.onPlayerDied += OnBallKilled;
 
             // Prepare the kickof panel
-            m_kickoffPanel.SetBallPosition(m_balls.transform.position);
-            m_kickoffPanel.onKickoffPressed += KickOffPressed;
+            UI.KickOffPanel.Instance.onKickoffPressed += KickOffPressed;
+            UI.WinPanel.ButtonInstance.onPressed += Continue;
+            UI.LosePanel.ButtonInstance.onPressed += Continue;
 
             // First kickoff
             StartCoroutine(StartGameRoutine());
@@ -95,16 +91,14 @@ namespace Caballol.Arkanoid.Gameplay
 
             // Respawn the ball and open the kick off panel
             m_balls.SpawnBall(m_player.BallSpawnPosition);
-            m_kickoffPanel.gameObject.SetActive(true);
+            UI.KickOffPanel.Open(m_player.BallSpawnPosition);
         }
 
         private IEnumerator StartGameRoutine()
         {
-            m_remainingLives = m_lives;
+            UI.HUD.Open();
 
-            // Hide the panels
-            m_winPanel.SetActive(false);
-            m_losePanel.SetActive(false);
+            m_remainingLives = m_lives;
 
             // Load the bricks in the level
             m_bricks.StartLevel();
@@ -120,6 +114,8 @@ namespace Caballol.Arkanoid.Gameplay
             m_player.Stop();
             m_player.CancelPowerUps();
             m_bricks.EndLevel();
+
+            UI.HUD.Close();
         }
 
         private IEnumerator WinRoutine()
@@ -127,7 +123,7 @@ namespace Caballol.Arkanoid.Gameplay
             StopPlaying();
 
             // Show the win panel
-            m_winPanel.SetActive(true);
+            UI.WinPanel.Open();
 
             // Give time to avoid skiping inadvertently
             yield return new WaitForSecondsRealtime(0.5f);
@@ -145,7 +141,7 @@ namespace Caballol.Arkanoid.Gameplay
             StopPlaying();
 
             // Show the lose panel
-            m_losePanel.SetActive(true);
+            UI.LosePanel.Open();
 
             // Give time to avoid skiping inadvertently
             yield return new WaitForSecondsRealtime(0.5f);
@@ -161,7 +157,6 @@ namespace Caballol.Arkanoid.Gameplay
         private void KickOffPressed(Vector3 direction)
         {
             // Close the kickoffpanel and kick off the ball
-            m_kickoffPanel.gameObject.SetActive(false);
             m_balls.KickOff(direction);
 
             // Return control to the player
